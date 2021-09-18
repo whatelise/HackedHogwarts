@@ -1,0 +1,47 @@
+* {
+  margin: 0;
+}
+.topbody {
+  width: 100%;
+  height: 50vw;
+  background-image: url("assets/darkBackground.svg");
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+body {
+  background-color: black;
+}
+#hogwartsName {
+  background-image: url("assets/hogwartsName.svg");
+  position: relative;
+  width: 50vw;
+  height: 100%;
+  /* top: 65vh;
+  left: 50vw; */
+  background-repeat: no-repeat;
+}
+main {
+  background-color: white;
+  padding: 1em;
+  font-family: sans-serif;
+}
+.studentlist {
+  padding-top: 1.5em;
+}
+h2 {
+  font-size: medium;
+}
+h3 {
+  font-size: small;
+}
+p {
+  font-size: small;
+}
+.hidden {
+  display: none;
+  visibility: hidden;
+}
+
+.studentprofile {
+  margin-top: 1em;
+}

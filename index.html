@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Hacked Hogwarts</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <header><div class="topbody"><div id="hogwartsName"></div></header>
+    <main>
+      <div class="controlboard">
+        <label for="filter">Filter by:</label>
+      <select name="filter" data-action='filter' id="filter">
+        <option value="Slytherin" class="filter" data-filter='Slytherin'>Slytherin</option>
+        <option value="Gryffindor" class="filter" data-filter='Gryffindor'>Gryffindor</option>
+        <option value="Hufflepuff" class="filter" data-filter='Hufflepuff'>Hufflepuff</option>
+        <option value="Ravenclaw" class="filter" data-filter='Ravenclaw'>Ravenclaw</option>
+        <option value="prefect" class="filter" data-filter='prefect'>Prefect</option>
+        <option value="expelled" class="filter" data-filter='expelled'>Expelled</option>
+        <option value="notexpelled" class="filter" data-filter='notexpelled'>Not Expelled</option>
+      </select>
+      <label for="sort">Sort by:</label>
+      <select name="sort" id="sort">
+      <option data-sort-direction="asc" data-action="sort" class="sort" value="firstname">First Name</option>
+        <option  data-sort-direction="asc" data-action="sort" class="sort" value="lastname">Last Name</option>
+        <option data-sort-direction="asc" data-action="sort" class="sort" value="house">House</option>
+        <option data-sort-direction="asc" data-action="sort" class="sort" value="responsibility">Responsibility</option>
+      </select><button id="sortdirection">⇅</button>
+      </div>
+      <div class="studentlist">
+        
+      </div>
+          <template id="studentprofile">
+            <div class="studentprofile">
+              <img class="studentimg"></div>
+<h2 class="fullname">Name: </h2>
+<h3 class="house">House:</h3>
+<p class="bloodstatus">Blood status: </p>
+<p class="prefect">Prefect: </p>
+<p class="expelled">Expelled: </p>
+<p class="inquisitorialsquad">Inquisitorial Squad: </p>
+
+          </template>
+  
+      
+    </main>
+  
+    <script src="hackedhowarts.js"></script>
+  </body>
+</html>
