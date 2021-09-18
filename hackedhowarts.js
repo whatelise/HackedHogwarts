@@ -11,6 +11,7 @@ const settings = {
 };
 
 const Student = {
+  // _id: "",
   firstname: "",
   nickname: "",
   middlename: "",
@@ -24,6 +25,7 @@ const Student = {
 };
 
 const allStudents = [];
+const expelledList = [];
 
 function start() {
   console.log("ready");
@@ -58,6 +60,7 @@ function prepareObjects(jsonData) {
     const newLastName = lastname.substring(0, 1).toUpperCase() + lastname.substring(1).toLowerCase();
     const newMiddleName = middlename.substring(0, 1).toUpperCase() + middlename.substring(1).toLowerCase();
     const house = jsonObject.house.trim();
+    const expelled = student.expelled;
 
     student.firstname = newFirstName;
     student.lastname = newLastName;
@@ -66,6 +69,7 @@ function prepareObjects(jsonData) {
     student.middlename = newMiddleName;
     student.nickname = nickname;
     student.img = findImg(student);
+    // student._id = createID(n);
     allStudents.push(student);
 
     displayList(allStudents);
@@ -85,11 +89,19 @@ function displayStudents(student) {
   const clone = template.cloneNode(true);
   clone.querySelector(".fullname").textContent = student.firstname + " " + student.middlename + " " + student.lastname;
   clone.querySelector(".house").textContent = student.house;
+  clone.querySelector(".expell").addEventListener("click", expellStudent);
+  function expellStudent() {
+    student.expelled = true;
+    buildList();
+  }
+
+  clone.querySelector(".expelled").textContent = `Expelled: ${student.expelled}`;
   clone.querySelector(".studentimg").src = "images/" + student.img;
-  const parent = document.querySelector(".studentlist");
+
   if (student.firstname === "") {
     clone.querySelector(".studentimg").classList.add("hidden");
   }
+  const parent = document.querySelector(".studentlist");
   parent.appendChild(clone);
 }
 function findImg(student) {
@@ -127,6 +139,9 @@ function registerButtons() {
   document.querySelectorAll(".filter").forEach((value) => value.addEventListener("click", selectFilter));
   document.querySelectorAll(".sort").forEach((value) => value.addEventListener("click", selectSort));
   document.querySelector("#sortdirection").addEventListener("click", sortDirection);
+  // document.querySelectorAll(".expell").forEach((button) => button.addEventListener("click", expellStudent));
+
+  // document.querySelector(".prefect").addEventListener("click", prefectStudent);
 }
 
 function selectFilter(event) {
@@ -147,6 +162,12 @@ function filterList(filteredList) {
     filteredList = allStudents.filter(isHufflepuff);
   } else if (settings.filterBy === "Ravenclaw") {
     filteredList = allStudents.filter(isRavenclaw);
+  } else if (settings.filterBy === "Prefect") {
+    filteredList = allStudents.filter(isPrefect);
+  } else if (settings.filterBy === "Expelled") {
+    filteredList = allStudents.filter(isExpelled);
+  } else if (settings.filterBy === "Notexpelled") {
+    filteredList = allStudents.filter(isNotExpelled);
   }
   return filteredList;
 }
@@ -161,6 +182,15 @@ function isHufflepuff(student) {
 }
 function isRavenclaw(student) {
   return student.house === "Ravenclaw";
+}
+function isPrefect(student) {
+  return student.prefect === true;
+}
+function isExpelled(student) {
+  return student.expelled === true;
+}
+function isNotExpelled(student) {
+  return student.expelled === false;
 }
 
 //Sorting
