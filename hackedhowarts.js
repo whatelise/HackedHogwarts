@@ -2,8 +2,10 @@
 window.addEventListener("DOMContentLoaded", start);
 
 let url = "https://petlatkea.dk/2021/hogwarts/students.json";
+let familyListUrl = "https://petlatkea.dk/2021/hogwarts/families.json";
 
 let filterBy = "all";
+
 const settings = {
   filter: null,
   sortBy: null,
@@ -25,7 +27,8 @@ const Student = {
 };
 
 const allStudents = [];
-const expelledList = [];
+const prefectList = [];
+let bloodStatusList;
 
 function start() {
   console.log("ready");
@@ -35,11 +38,17 @@ function start() {
 }
 
 function loadJSON() {
-  fetch(url)
+  fetch(familyListUrl)
     .then((response) => response.json())
-    .then((jsonData) => {
+    .then((data) => {
       // when loaded, prepare objects
-      prepareObjects(jsonData);
+      bloodStatusList = data;
+      fetch(url)
+        .then((response) => response.json())
+        .then((jsonData) => {
+          // when loaded, prepare objects
+          prepareObjects(jsonData);
+        });
     });
 }
 
@@ -61,6 +70,7 @@ function prepareObjects(jsonData) {
     const newMiddleName = middlename.substring(0, 1).toUpperCase() + middlename.substring(1).toLowerCase();
     const house = jsonObject.house.trim();
     const expelled = student.expelled;
+    const prefect = student.prefect;
 
     student.firstname = newFirstName;
     student.lastname = newLastName;
@@ -69,6 +79,7 @@ function prepareObjects(jsonData) {
     student.middlename = newMiddleName;
     student.nickname = nickname;
     student.img = findImg(student);
+    student.bloodstatus = bloodStatus(newLastName);
     // student._id = createID(n);
     allStudents.push(student);
 
@@ -87,23 +98,73 @@ function getNickname(middlename) {
 function displayStudents(student) {
   const template = document.querySelector("template#studentprofile").content;
   const clone = template.cloneNode(true);
+
   clone.querySelector(".fullname").textContent = student.firstname + " " + student.middlename + " " + student.lastname;
   clone.querySelector(".house").textContent = student.house;
-  clone.querySelector(".expell").addEventListener("click", expellStudent);
+  clone.querySelector(".studentimg").src = "images/" + student.img;
+  clone.querySelector(".studentprofile").addEventListener("click", setModal);
+
+  function setModal(event) {
+    openInfo(student);
+    console.log("setmodal");
+  }
+
+  if (student.firstname === "") {
+    clone.querySelector(".studentimg").classList.add("hidden");
+  }
+
+  const parent = document.querySelector(".studentlist");
+  parent.appendChild(clone);
+}
+function openInfo(student) {
+  let modal = document.querySelector(".infopopup");
+  modal.classList.remove("hidden");
+  document.querySelector(".closepopup").addEventListener("click", () => {
+    modal.classList.add("hidden");
+  });
+  modal.querySelector(".popupfullname").textContent = student.firstname + " " + student.middlename + " " + student.lastname;
+  modal.querySelector(".popuphouse").textContent = student.house;
+  modal.querySelector(".expell").addEventListener("click", expellStudent);
   function expellStudent() {
     student.expelled = true;
     buildList();
   }
 
-  clone.querySelector(".expelled").textContent = `Expelled: ${student.expelled}`;
-  clone.querySelector(".studentimg").src = "images/" + student.img;
+  modal.querySelector(".expelled").textContent = `${student.expelled}`;
+  modal.querySelector(".prefect").textContent = `${student.prefect}`;
+  modal.querySelector(".bloodstatus").textContent = `${student.bloodstatus}`;
 
-  if (student.firstname === "") {
-    clone.querySelector(".studentimg").classList.add("hidden");
+  modal.querySelector(".popupstudentimg").src = "images/" + student.img;
+  modal.querySelector(".makeinquis").addEventListener("click", makeInquisitorial);
+  modal.querySelector(".makeprefect").addEventListener("click", prefectStudent);
+  function prefectStudent() {
+    if (student.prefect === true) {
+      student.prefect = false;
+    } else {
+      if (prefectList.length > 2) {
+        document.querySelector(".alertprefect").classList.remove("hidden");
+        document.querySelector(".close").addEventListener("click", closeAlert);
+        console.log("Over 2");
+        prefectList.pop(student);
+      } else {
+        student.prefect = true;
+        prefectList.push(student);
+      }
+      console.log(prefectList.length);
+    }
+    modal.querySelector(".makeprefect").removeEventListener("click", prefectStudent);
+    buildList();
   }
-  const parent = document.querySelector(".studentlist");
-  parent.appendChild(clone);
+  modal.querySelector(".inquisitorialsquad").textContent = `${student.inquisitorialsquad}`;
+  function makeInquisitorial() {
+    modal.querySelector(".makeinquis").removeEventListener("click", makeInquisitorial);
+    if (student.house === "Slytherin" || student.bloodstatus === "pure") {
+      student.inquisitorialsquad = true;
+    }
+    buildList();
+  }
 }
+
 function findImg(student) {
   const urlFirstName = student.firstname.substring(0, 1).toLowerCase();
   const urlLastName = student.lastname.toLowerCase();
@@ -129,7 +190,7 @@ function buildList() {
   const sortedList = sortList(currentList);
   console.log(sortedList);
   displayList(sortedList);
-  // displayList(currentList);
+  console.log(prefectList);
 }
 function displayList(sad) {
   document.querySelector(".studentlist").innerHTML = "";
@@ -139,11 +200,11 @@ function registerButtons() {
   document.querySelectorAll(".filter").forEach((value) => value.addEventListener("click", selectFilter));
   document.querySelectorAll(".sort").forEach((value) => value.addEventListener("click", selectSort));
   document.querySelector("#sortdirection").addEventListener("click", sortDirection);
-  // document.querySelectorAll(".expell").forEach((button) => button.addEventListener("click", expellStudent));
-
-  // document.querySelector(".prefect").addEventListener("click", prefectStudent);
 }
-
+function closeAlert() {
+  document.querySelector(".alertprefect").classList.add("hidden");
+}
+//Filtering//
 function selectFilter(event) {
   const filter = event.target.value;
   console.log(`User selected ${filter}`);
@@ -199,10 +260,6 @@ function selectSort(event) {
   const sortBy = event.target.value;
   const sortDir = event.target.value.sortDirection;
 
-  // const oldElement = document.querySelector(`[data-sort ="${settings.sortBy}"]`);
-  // oldElement.classList.remove("sortby");
-  // event.target.classList.add("sortby");
-
   console.log(`User selected ${sortBy}`);
   setSort(sortBy, sortDir);
 }
@@ -237,4 +294,18 @@ function sortDirection(e) {
     e.target.dataset.sortDirection = "asc";
   }
   buildList();
+}
+
+function bloodStatus(lastName) {
+  let bloodType;
+  if (lastName) {
+    bloodType = "muggle";
+    if (bloodStatusList.pure.includes(lastName)) {
+      bloodType = "pure";
+    }
+    if (bloodStatusList.half.includes(lastName)) {
+      bloodType = "half";
+    }
+  }
+  return bloodType;
 }

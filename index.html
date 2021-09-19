@@ -28,24 +28,34 @@
         <option data-sort-direction="asc" data-action="sort" class="sort" value="responsibility">Responsibility</option>
       </select><button id="sortdirection">⇅</button>
       </div>
+
+      <div class="alertprefect hidden"><p>You cannot add another student to prefect</p><div class="close">X</div>  </div>
       <div class="studentlist">
-        
       </div>
           <template id="studentprofile">
             <div class="studentprofile">
               <img class="studentimg">
               <div class="info">
-<h2 class="fullname">Name: </h2>
-<h3 class="house">House:</h3>
-<p class="bloodstatus">Blood status: </p>
-<p class="prefect">Prefect: </p>
-<p class="expelled">Expelled: </p>
-<p class="inquisitorialsquad">Inquisitorial Squad: </p>
+<h2 class="fullname">Name</h2>
+<h3 class="house">House</h3>
 </div>
-<button class="expell">Expell</button>
-<button class="prefect">Prefect</button>
 </div>
           </template>
+          
+            <div class="infopopup hidden">
+              <div class="closepopup">X</div>
+              <img class="popupstudentimg">
+              <h2 class="popupfullname">Name</h2>
+            <h3 class="popuphouse">House</h3>
+            <div class="flex"><div class="infolabel">Blood Status:</div> <p class="bloodstatus column"></p></div>
+            <div class="flex"><div class="infolabel">Prefect:</div> <p class="prefect column"></p></div>
+            <div class="flex"><div class="infolabel">Expelled:</div> <p class="expelled column"></p></div>
+            <div class="flex"><div class="infolabel">Inquisitorial Squad:</div> <p class="inquisitorialsquad column"></p></div>
+            <button class="expell">Expell</button>
+            <button class="makeprefect">Prefect</button>
+            <button class="makeinquis">Inquisitorial Squad</button></div>
+          
+          
   
       
     </main>
