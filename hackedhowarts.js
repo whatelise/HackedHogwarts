@@ -5,7 +5,6 @@ let url = "https://petlatkea.dk/2021/hogwarts/students.json";
 let familyListUrl = "https://petlatkea.dk/2021/hogwarts/families.json";
 
 let filterBy = "all";
-
 const settings = {
   filter: null,
   sortBy: null,
@@ -32,9 +31,8 @@ let bloodStatusList;
 
 function start() {
   console.log("ready");
-
-  loadJSON();
   registerButtons();
+  loadJSON();
 }
 
 function loadJSON() {
@@ -293,6 +291,8 @@ function sortDirection(e) {
   } else {
     e.target.dataset.sortDirection = "asc";
   }
+  this.removeEventListener("click", sortDirection);
+  registerButtons();
   buildList();
 }
 
