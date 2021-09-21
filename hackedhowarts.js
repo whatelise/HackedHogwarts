@@ -27,6 +27,13 @@ const Student = {
 
 const allStudents = [];
 const prefectList = [];
+const houses = {
+  Gryffindor: { prefects: [] },
+  Slytherin: { prefects: [] },
+  Hufflepuff: { prefects: [] },
+  Ravenclaw: { prefects: [] },
+};
+
 let bloodStatusList;
 
 function start() {
@@ -67,20 +74,20 @@ function prepareObjects(jsonData) {
     const newLastName = lastname.substring(0, 1).toUpperCase() + lastname.substring(1).toLowerCase();
     const newMiddleName = middlename.substring(0, 1).toUpperCase() + middlename.substring(1).toLowerCase();
     const house = jsonObject.house.trim();
+
     const expelled = student.expelled;
     const prefect = student.prefect;
 
     student.firstname = newFirstName;
     student.lastname = newLastName;
     student.gender = jsonObject.gender.substring(0, 1).toUpperCase() + jsonObject.gender.substring(1).toLowerCase();
-    student.house = house.substring(0, 1).toUpperCase() + jsonObject.house.substring(1).toLowerCase();
+    student.house = house.substring(0, 1).toUpperCase() + house.substring(1).toLowerCase();
     student.middlename = newMiddleName;
     student.nickname = nickname;
     student.img = findImg(student);
     student.bloodstatus = bloodStatus(newLastName);
     // student._id = createID(n);
     allStudents.push(student);
-
     displayList(allStudents);
     // console.table(allStudents);
   });
@@ -109,6 +116,7 @@ function displayStudents(student) {
 
   if (student.firstname === "") {
     clone.querySelector(".studentimg").classList.add("hidden");
+    clone.querySelector(".blackbox").classList.remove("hidden");
   }
 
   const parent = document.querySelector(".studentlist");
@@ -138,19 +146,25 @@ function openInfo(student) {
   function prefectStudent() {
     if (student.prefect === true) {
       student.prefect = false;
+      // this.querySelector(".makeprefect").innerHTML = "Remove from Prefect";
     } else {
-      if (prefectList.length > 2) {
-        document.querySelector(".alertprefect").classList.remove("hidden");
-        document.querySelector(".close").addEventListener("click", closeAlert);
-        console.log("Over 2");
-        prefectList.pop(student);
-      } else {
-        student.prefect = true;
-        prefectList.push(student);
-      }
-      console.log(prefectList.length);
+      student.prefect = true;
+      prefectList.push(student);
+      console.log(student.house);
     }
+    if (prefectList.length > 2) {
+      document.querySelector(".alertprefect").classList.remove("hidden");
+      document.querySelector(".close").addEventListener("click", closeAlert);
+      prefectList.pop(student);
+    }
+    console.log(prefectList);
+
+    // console.log(prefectList.Object);
+    // if (prefectList.student.house === "Slytherin" && prefectList.house > 2) {
+    // }
+
     modal.querySelector(".makeprefect").removeEventListener("click", prefectStudent);
+    openInfo(student);
     buildList();
   }
   modal.querySelector(".inquisitorialsquad").textContent = `${student.inquisitorialsquad}`;
@@ -160,6 +174,7 @@ function openInfo(student) {
       student.inquisitorialsquad = true;
     }
     buildList();
+    openInfo(student);
   }
 }
 
@@ -186,9 +201,8 @@ function findImg(student) {
 function buildList() {
   const currentList = filterList(allStudents);
   const sortedList = sortList(currentList);
-  console.log(sortedList);
   displayList(sortedList);
-  console.log(prefectList);
+  displayCount(currentList);
 }
 function displayList(sad) {
   document.querySelector(".studentlist").innerHTML = "";
@@ -202,6 +216,7 @@ function registerButtons() {
 function closeAlert() {
   document.querySelector(".alertprefect").classList.add("hidden");
 }
+
 //Filtering//
 function selectFilter(event) {
   const filter = event.target.value;
@@ -309,3 +324,10 @@ function bloodStatus(lastName) {
   }
   return bloodType;
 }
+
+function displayCount(currentList) {
+  // const listCount = sortedList.length;
+  document.querySelector(".counterNumber").innerHTML = currentList.length;
+}
+// 👑 "U+1F451"
+// 🩸 "U+1FA78"

@@ -133,3 +133,29 @@ button {
   font-size: 2em;
   cursor: pointer;
 }
+main {
+  display: flex;
+}
+.counterTable {
+  padding-top: 8em;
+  margin-left: 4em;
+  text-align: center;
+}
+.counterTable p {
+  font-size: 18px;
+}
+.counterTable h4 {
+  font-size: 24px;
+  margin-top: 10px;
+}
+#main {
+  margin-left: 8em;
+  width: 30em;
+}
+
+.blackbox {
+  width: 7em;
+  height: 7em;
+  border-radius: 20px;
+  background-color: black;
+}

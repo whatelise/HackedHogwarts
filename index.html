@@ -8,7 +8,13 @@
   </head>
   <body>
     <header><div class="topbody"><div id="hogwartsName"></div></header>
+   
     <main>
+      <aside class= "counterTable">
+        <p class="counterHeader">List Count</p>
+        <h4 class="counterNumber">4</h4>
+       </aside>
+       <div id="main">
       <div class="controlboard">
         <label for="filter">Filter by:</label>
       <select name="filter" data-action='filter' id="filter">
@@ -34,6 +40,7 @@
       </div>
           <template id="studentprofile">
             <div class="studentprofile">
+              <div class="blackbox hidden"></div>
               <img class="studentimg">
               <div class="info">
 <h2 class="fullname">Name</h2>
@@ -44,6 +51,7 @@
           
             <div class="infopopup hidden">
               <div class="closepopup">X</div>
+              <div class="blackbox"></div>
               <img class="popupstudentimg">
               <h2 class="popupfullname">Name</h2>
             <h3 class="popuphouse">House</h3>
@@ -57,7 +65,7 @@
           
           
   
-      
+          </div>
     </main>
   
     <script src="hackedhowarts.js"></script>
