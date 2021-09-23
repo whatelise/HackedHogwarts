@@ -15,8 +15,8 @@ body {
   background-image: url("assets/hogwartsName.svg");
   position: relative;
   width: 50vw;
-  height: 100%;
-  top: 60%;
+  height: 20vw;
+  top: 40%;
   left: 50vw;
   background-repeat: no-repeat;
 }
@@ -156,6 +156,40 @@ main {
 .blackbox {
   width: 7em;
   height: 7em;
-  border-radius: 20px;
+  border-radius: ;
   background-color: black;
+}
+
+.slytherin {
+  outline: 5px solid green;
+  border: 2px solid #e1ad01;
+}
+.ravenclaw {
+  outline: 5px solid blue;
+  border: 2px solid #e1ad01;
+}
+.hufflepuff {
+  outline: 5px solid black;
+  border: 2px solid #e1ad01;
+}
+.gryffindor {
+  outline: 5px solid darkred;
+  border: 2px solid #e1ad01;
+}
+
+.slytherinpop {
+  outline: 7px solid green;
+  border: 4px solid #e1ad01;
+}
+.ravenclawpop {
+  outline: 7px solid blue;
+  border: 4px solid #e1ad01;
+}
+.hufflepuffpop {
+  outline: 7px solid black;
+  border: 4px solid #e1ad01;
+}
+.gryffindorpop {
+  outline: 7px solid darkred;
+  border: 4px solid #e1ad01;
 }

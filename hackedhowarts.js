@@ -118,6 +118,15 @@ function displayStudents(student) {
     clone.querySelector(".studentimg").classList.add("hidden");
     clone.querySelector(".blackbox").classList.remove("hidden");
   }
+  if (student.house === "Slytherin") {
+    clone.querySelector(".studentprofile").classList.add("slytherin");
+  } else if (student.house === "Ravenclaw") {
+    clone.querySelector(".studentprofile").classList.add("ravenclaw");
+  } else if (student.house === "Gryffindor") {
+    clone.querySelector(".studentprofile").classList.add("gryffindor");
+  } else if (student.house === "Hufflepuff") {
+    clone.querySelector(".studentprofile").classList.add("hufflepuff");
+  }
 
   const parent = document.querySelector(".studentlist");
   parent.appendChild(clone);
@@ -139,6 +148,15 @@ function openInfo(student) {
   modal.querySelector(".expelled").textContent = `${student.expelled}`;
   modal.querySelector(".prefect").textContent = `${student.prefect}`;
   modal.querySelector(".bloodstatus").textContent = `${student.bloodstatus}`;
+  if (student.house === "Slytherin") {
+    modal.classList.add("slytherinpop");
+  } else if (student.house === "Ravenclaw") {
+    modal.classList.add("ravenclawpop");
+  } else if (student.house === "Gryffindor") {
+    modal.classList.add("gryffindorpop");
+  } else if (student.house === "Hufflepuff") {
+    modal.classList.add("hufflepuffpop");
+  }
 
   modal.querySelector(".popupstudentimg").src = "images/" + student.img;
   modal.querySelector(".makeinquis").addEventListener("click", makeInquisitorial);
