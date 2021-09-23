@@ -3,6 +3,7 @@ window.addEventListener("DOMContentLoaded", start);
 
 let url = "https://petlatkea.dk/2021/hogwarts/students.json";
 let familyListUrl = "https://petlatkea.dk/2021/hogwarts/families.json";
+let systemIsHacked;
 
 let filterBy = "all";
 const settings = {
@@ -82,11 +83,13 @@ function prepareObjects(jsonData) {
     student.lastname = newLastName;
     student.gender = jsonObject.gender.substring(0, 1).toUpperCase() + jsonObject.gender.substring(1).toLowerCase();
     student.house = house.substring(0, 1).toUpperCase() + house.substring(1).toLowerCase();
+
     student.middlename = newMiddleName;
+
     student.nickname = nickname;
     student.img = findImg(student);
     student.bloodstatus = bloodStatus(newLastName);
-    // student._id = createID(n);
+
     allStudents.push(student);
     displayList(allStudents);
     // console.table(allStudents);
@@ -140,8 +143,13 @@ function openInfo(student) {
   modal.querySelector(".popupfullname").textContent = student.firstname + " " + student.middlename + " " + student.lastname;
   modal.querySelector(".popuphouse").textContent = student.house;
   modal.querySelector(".expell").addEventListener("click", expellStudent);
+
   function expellStudent() {
     student.expelled = true;
+    // if (student.expelled === true) {
+    //   this.classList.add("nowExpelled");
+    // }
+    openInfo(student);
     buildList();
   }
 
@@ -170,7 +178,7 @@ function openInfo(student) {
       prefectList.push(student);
       console.log(student.house);
     }
-    if (prefectList.length > 2) {
+    if (prefectList.length > 3) {
       document.querySelector(".alertprefect").classList.remove("hidden");
       document.querySelector(".close").addEventListener("click", closeAlert);
       prefectList.pop(student);
@@ -181,7 +189,7 @@ function openInfo(student) {
     // if (prefectList.student.house === "Slytherin" && prefectList.house > 2) {
     // }
 
-    modal.querySelector(".makeprefect").removeEventListener("click", prefectStudent);
+    // modal.querySelector(".makeprefect").removeEventListener("click", prefectStudent);
     openInfo(student);
     buildList();
   }
@@ -191,8 +199,8 @@ function openInfo(student) {
     if (student.house === "Slytherin" || student.bloodstatus === "pure") {
       student.inquisitorialsquad = true;
     }
-    buildList();
     openInfo(student);
+    buildList();
   }
 }
 
@@ -230,6 +238,7 @@ function registerButtons() {
   document.querySelectorAll(".filter").forEach((value) => value.addEventListener("click", selectFilter));
   document.querySelectorAll(".sort").forEach((value) => value.addEventListener("click", selectSort));
   document.querySelector("#sortdirection").addEventListener("click", sortDirection);
+  document.querySelector(".hackaway").addEventListener("click", hackTheSystem);
 }
 function closeAlert() {
   document.querySelector(".alertprefect").classList.add("hidden");
@@ -349,3 +358,38 @@ function displayCount(currentList) {
 }
 // 👑 "U+1F451"
 // 🩸 "U+1FA78"
+
+function hackTheSystem() {
+  systemIsHacked = true;
+  console.log("hack");
+  const meAsStudent = {
+    firstname: "Elise",
+    nickname: "",
+    middlename: "",
+    lastname: "Mccreary",
+    house: "Slytherin",
+    img: "",
+    bloodstatus: "muggle",
+    prefect: false,
+    expelled: false,
+    inquisitorialsquad: false,
+  };
+  allStudents.push(meAsStudent);
+
+  // if (meAsStudent.expelled === true) {
+  //   meAsStudent = false;
+  // }
+  hackBloodStatus(allStudents);
+  buildList();
+}
+
+function hackBloodStatus() {
+  allStudents.forEach((student) => {
+    student.bloodstatus = bloodStatus(student.lastname);
+  });
+  // if (student.bloodstatus === "muggle") {
+  //   student.bloodstatus = "pure";
+  //   console.log("change blood status");
+  // }
+  buildList();
+}

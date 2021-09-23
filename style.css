@@ -193,3 +193,7 @@ main {
   outline: 7px solid darkred;
   border: 4px solid #e1ad01;
 }
+
+.nowExpelled {
+  background-color: red;
+}
