@@ -12,13 +12,14 @@
     <main>
       <aside class= "counterTable">
         <p class="counterHeader">List Count</p>
-        <h4 class="counterNumber">4</h4>
+        <h4 class="counterNumber">34</h4>
        </aside>
        <div id="main">
       <div class="controlboard">
        
         <label for="filter">Filter by:</label>
       <select name="filter" data-action='filter' id="filter">
+        <option value="AllStudents" class="filter" data-filter='AllStudents'>All Students</option>
         <option value="Slytherin" class="filter" data-filter='Slytherin'>Slytherin</option>
         <option value="Gryffindor" class="filter" data-filter='Gryffindor'>Gryffindor</option>
         <option value="Hufflepuff" class="filter" data-filter='Hufflepuff'>Hufflepuff</option>
@@ -37,7 +38,11 @@
       <button class="hackaway">Hack</button>
       </div>
 
-      <div class="alertprefect hidden"><p>You cannot add another student to prefect</p><div class="close">X</div>  </div>
+      <div class="container hidden"></div>
+        <div class="alertprefect hidden">
+          <p>You cannot add another student to prefect</p><div class="close">X</div>  
+        </div>
+      
       <div class="studentlist">
       </div>
           <template id="studentprofile">
@@ -50,13 +55,13 @@
 </div>
 </div>
           </template>
-          
             <div class="infopopup hidden">
               <div class="closepopup">X</div>
               <div class="blackbox hidden"></div>
               <img class="popupstudentimg">
               <h2 class="popupfullname">Name</h2>
-            <h3 class="popuphouse">House</h3>
+            <div class="flex"><img class="houseCrest">
+              <h3 class="popuphouse">House</h3></div>
             <div class="flex"><div class="infolabel">Blood Status:</div> <p class="bloodstatus column"></p></div>
             <div class="flex"><div class="infolabel">Prefect:</div> <p class="prefect column"></p></div>
             <div class="flex"><div class="infolabel">Expelled:</div> <p class="expelled column"></p></div>
@@ -64,9 +69,6 @@
             <button class="expell">Expell</button>
             <button class="makeprefect">Prefect</button>
             <button class="makeinquis">Inquisitorial Squad</button></div>
-          
-          
-  
           </div>
     </main>
   

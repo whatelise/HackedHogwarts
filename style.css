@@ -73,8 +73,9 @@ p {
 }
 
 .alertprefect {
+  z-index: 99;
   position: fixed;
-  top: 50%;
+  top: 25%;
   left: 20vw;
   background-color: white;
   border: 5px solid red;
@@ -82,6 +83,19 @@ p {
   width: 60vw;
   text-align: center;
   padding-top: 80px;
+}
+.container {
+  position: fixed;
+  width: 100vw;
+  height: 100vw;
+  background-color: black;
+  opacity: 80%;
+  top: 0;
+  left: 0;
+  z-index: 99;
+}
+.alertprefect p {
+  font-size: 20px;
 }
 .close {
   position: relative;
@@ -96,10 +110,10 @@ p {
   top: 15%;
   left: 25%;
   width: 30vw;
-  height: 20em;
+  height: 24em;
   padding: 3em;
   border-radius: 20px;
-  border: 10px solid red;
+  z-index: 1;
 }
 .flex {
   display: flex;
@@ -128,8 +142,8 @@ button {
 .closepopup {
   position: relative;
   float: right;
-  top: -14%;
-  right: -16%;
+  top: -10%;
+  right: -12%;
   font-size: 2em;
   cursor: pointer;
 }
@@ -196,4 +210,8 @@ main {
 
 .nowExpelled {
   background-color: red;
+}
+.houseCrest {
+  width: 3em;
+  border-radius: 20px;
 }
