@@ -17,7 +17,7 @@
        <div id="main">
       <div class="controlboard">
        
-        <label for="filter">Filter by:</label>
+        <label id="filterby" for="filter">FILTER BY:</label>
       <select name="filter" data-action='filter' id="filter">
         <option value="AllStudents" class="filter" data-filter='AllStudents'>All Students</option>
         <option value="Slytherin" class="filter" data-filter='Slytherin'>Slytherin</option>
@@ -28,14 +28,14 @@
         <option value="Expelled" class="filter" data-filter='Expelled'>Expelled</option>
         <option value="Notexpelled" class="filter" data-filter='Notexpelled'>Not Expelled</option>
       </select>
-      <label for="sort">Sort by:</label>
+      <label id="sortby" for="sort">SORT BY:</label>
       <select name="sort" id="sort">
       <option data-sort-direction="asc" data-action="sort" class="sort" value="firstname">First Name</option>
         <option  data-sort-direction="asc" data-action="sort" class="sort" value="lastname">Last Name</option>
         <option data-sort-direction="asc" data-action="sort" class="sort" value="house">House</option>
         <option data-sort-direction="asc" data-action="sort" class="sort" value="responsibility">Responsibility</option>
       </select><button id="sortdirection">⇅</button>
-      <button class="hackaway">Hack</button>
+      <button class="hackaway">HACK</button>
       </div>
 
       <div class="container hidden"></div>
@@ -62,12 +62,12 @@
               <h2 class="popupfullname">Name</h2>
             <div class="flex"><img class="houseCrest">
               <h3 class="popuphouse">House</h3></div>
-            <div class="flex"><div class="infolabel">Blood Status:</div> <p class="bloodstatus column"></p></div>
-            <div class="flex"><div class="infolabel">Prefect:</div> <p class="prefect column"></p></div>
-            <div class="flex"><div class="infolabel">Expelled:</div> <p class="expelled column"></p></div>
-            <div class="flex"><div class="infolabel">Inquisitorial Squad:</div> <p class="inquisitorialsquad column"></p></div>
-            <button class="expell">Expell</button>
-            <button class="makeprefect">Prefect</button>
+            <div class="flex"><div class="infolabel">🩸 Blood Status:</div> <p class="bloodstatus column"></p></div>
+            <div class="flex"><div class="infolabel">👑 Prefect:</div> <p class="prefect column"></p></div>
+            <div class="flex"><div class="infolabel">✖ Expelled:</div> <p class="expelled column"></p></div>
+            <div class="flex"><div class="infolabel">📜 Inquisitorial Squad:</div> <p class="inquisitorialsquad column"></p></div>
+            <button class="expell">Expell Student</button>
+            <button class="makeprefect">Add to Prefect</button>
             <button class="makeinquis">Inquisitorial Squad</button></div>
           </div>
     </main>
