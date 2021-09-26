@@ -13,7 +13,6 @@ const settings = {
 };
 
 const Student = {
-  // _id: "",
   firstname: "",
   nickname: "",
   middlename: "",
