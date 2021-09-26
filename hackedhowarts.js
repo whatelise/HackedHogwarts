@@ -185,8 +185,36 @@ function openInfo(student) {
   modal.querySelector(".inquisitorialsquad").textContent = `${student.inquisitorialsquad}`;
   modal.querySelector(".popupstudentimg").src = "images/" + student.img;
   modal.querySelector(".makeinquis").addEventListener("click", makeInquisitorial);
-  modal.querySelector(".makeprefect").addEventListener("click", prefectStudent(student));
+  modal.querySelector(".makeprefect").addEventListener("click", prefectStudent);
+  function prefectStudent() {
+    modal.querySelector(".makeprefect").removeEventListener("click", prefectStudent);
+    if (student.prefect === true) {
+      student.prefect = false;
+      modal.querySelector(".makeprefect").textContent = "Make Prefect";
+      openInfo(student);
+      buildList();
+    } else {
+      modal.querySelector(".makeprefect").textContent = "Remove Prefect";
+      tryToMakePrefect(student);
+    }
+  }
 
+  function tryToMakePrefect(selectedStudent) {
+    console.log("try to make prefect");
+    const studentsPerHouse = allStudents.filter((student) => student.house === selectedStudent.house);
+    const prefectsPerHouse = studentsPerHouse.filter((student) => student.prefect);
+    const numberOfPrefects = prefectsPerHouse.length;
+
+    if (numberOfPrefects >= 2) {
+      document.querySelector(".container").classList.remove("hidden");
+      document.querySelector(".alertprefect").classList.remove("hidden");
+      document.querySelector(".close").addEventListener("click", closeAlert);
+    } else {
+      selectedStudent.prefect = true;
+    }
+    openInfo(student);
+    buildList();
+  }
   function makeInquisitorial() {
     modal.querySelector(".makeinquis").removeEventListener("click", makeInquisitorial);
     if (student.house === "Slytherin" || student.bloodstatus === "Pure") {
@@ -401,30 +429,4 @@ function hackBloodStatus() {
       console.log("pure to random");
     }
   });
-}
-
-function prefectStudent(student) {
-  if (student.prefect === true) {
-    student.prefect = false;
-    document.querySelector(".makeprefect").textContent = "Make Prefect";
-    openInfo(student);
-    buildList();
-  } else {
-    tryToMakePrefect(student);
-  }
-}
-
-function tryToMakePrefect(selectedStudent) {
-  console.log("try to make prefect");
-  const studentsPerHouse = allStudents.filter((student) => student.house === selectedStudent.house);
-  const prefectsPerHouse = studentsPerHouse.filter((student) => student.prefect);
-  const numberOfPrefects = prefectsPerHouse.length;
-
-  if (numberOfPrefects >= 2) {
-    document.querySelector(".container").classList.remove("hidden");
-    document.querySelector(".alertprefect").classList.remove("hidden");
-    document.querySelector(".close").addEventListener("click", closeAlert);
-  } else {
-    selectedStudent.prefect = true;
-  }
 }
