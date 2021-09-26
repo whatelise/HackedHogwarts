@@ -27,13 +27,6 @@ const Student = {
 };
 
 const allStudents = [];
-// const prefectList = [];
-// const houses = {
-//   Gryffindor: { prefects: [] },
-//   Slytherin: { prefects: [] },
-//   Hufflepuff: { prefects: [] },
-//   Ravenclaw: { prefects: [] },
-// };
 
 let bloodStatusList;
 
