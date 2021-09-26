@@ -151,19 +151,23 @@ function openInfo(student) {
 
   function expellStudent() {
     modal.querySelector(".expell").removeEventListener("click", expellStudent);
-    student.expelled = true;
 
     if (student.firstname === "Elise") {
       student.expelled = false;
       alert("Elise can never be expelled!!");
       console.log("Tried to expell me");
+    } else {
+      student.expelled = true;
     }
     openInfo(student);
     buildList();
   }
   if (student.expelled === true) {
-    document.querySelector(".expell").style.backgroundColor = "lightgrey";
-    document.querySelector(".expell").textContent = "Expelled";
+    modal.querySelector(".expell").style.backgroundColor = "lightgrey";
+    modal.querySelector(".expell").textContent = "Expelled";
+  } else if (student.expelled === false) {
+    modal.querySelector(".expell").style.backgroundColor = "transparent";
+    modal.querySelector(".expell").textContent = "Expell Student";
   }
 
   modal.querySelector(".expelled").textContent = ` ${student.expelled}`;
@@ -263,23 +267,31 @@ function buildList() {
   const currentList = filterList(allStudents.filter((student) => student.expelled === false));
   const sortedList = sortList(currentList);
   displayList(sortedList);
-  displayCount(currentList);
 }
 function displayList(sad) {
   document.querySelector(".studentlist").innerHTML = "";
   sad.forEach(displayStudents);
+  displayCount(sad);
 }
 function registerButtons() {
   document.querySelectorAll(".filter").forEach((value) => value.addEventListener("click", selectFilter));
   document.querySelectorAll(".sort").forEach((value) => value.addEventListener("click", selectSort));
   document.querySelector("#sortdirection").addEventListener("click", sortDirection);
   document.querySelector(".hackaway").addEventListener("click", hackTheSystem);
+  document.querySelector("#search").addEventListener("input", searchStudent);
 }
 function closeAlert() {
   document.querySelector(".alertprefect").classList.add("hidden");
   document.querySelector(".container").classList.add("hidden");
 }
-
+//Search//
+function searchStudent(input) {
+  const searchString = input.target.value.toLowerCase();
+  const searchedStudents = allStudents.filter((student) => {
+    return student.firstname.toLowerCase().includes(searchString) || student.lastname.toLowerCase().includes(searchString) || student.house.toLowerCase().includes(searchString);
+  });
+  displayList(searchedStudents);
+}
 //Filtering//
 function selectFilter(event) {
   const filter = event.target.value;
