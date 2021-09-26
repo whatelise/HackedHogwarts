@@ -150,20 +150,20 @@ function openInfo(student) {
   modal.querySelector(".expell").addEventListener("click", expellStudent);
 
   function expellStudent() {
-    // if (student.expelled === true) {
-    //   this.classList.add("nowExpelled");
-    // }
+    modal.querySelector(".expell").removeEventListener("click", expellStudent);
+    student.expelled = true;
+
     if (student.firstname === "Elise") {
       student.expelled = false;
       alert("Elise can never be expelled!!");
       console.log("Tried to expell me");
-    } else {
-      student.expelled = true;
-      modal.querySelector(".expell").textContent = "Expelled";
-      modal.querySelector(".expell").style.backgroundColor = "lightgrey";
     }
     openInfo(student);
     buildList();
+  }
+  if (student.expelled === true) {
+    document.querySelector(".expell").style.backgroundColor = "lightgrey";
+    document.querySelector(".expell").textContent = "Expelled";
   }
 
   modal.querySelector(".expelled").textContent = ` ${student.expelled}`;
@@ -190,10 +190,10 @@ function openInfo(student) {
     modal.querySelector(".makeprefect").removeEventListener("click", prefectStudent);
     if (student.prefect === true) {
       student.prefect = false;
-      modal.querySelector(".makeprefect").textContent = "Make Prefect";
+      modal.querySelector(".makeprefect").textContent = "Add to Prefect";
       openInfo(student);
       buildList();
-    } else {
+    } else if (student.prefect === false) {
       modal.querySelector(".makeprefect").textContent = "Remove Prefect";
       tryToMakePrefect(student);
     }
@@ -221,16 +221,16 @@ function openInfo(student) {
       if (student.inquisitorialsquad === true) {
         student.inquisitorialsquad = false;
         modal.querySelector(".makeinquis").textContent = "Inquisitorial Squad";
-      } else {
+      } else if (student.inquisitorialsquad === false) {
         student.inquisitorialsquad = true;
         modal.querySelector(".makeinquis").textContent = "Remove Inquisitorial";
       }
       if (systemIsHacked === true) {
         setTimeout(removeFromInquis, 2000);
       }
-      openInfo(student);
-      buildList();
     }
+    openInfo(student);
+    buildList();
   }
 
   function removeFromInquis() {
@@ -362,14 +362,18 @@ function setSort(sortBy, sortDir) {
   buildList();
 }
 function sortDirection(e) {
-  settings.sortDir = e.target.dataset.sortDirection;
-
-  if (settings.sortDir === "asc") {
-    e.target.dataset.sortDirection = "desc";
+  console.log(this);
+  //toggle direction
+  console.log(settings.sortDir);
+  if (settings.sortDir === "desc") {
+    console.log("asc shown");
+    /*     e.target.innerHTML = "&#11014"; */
+    settings.sortDir = "asc";
   } else {
-    e.target.dataset.sortDirection = "asc";
+    console.log("decending shown");
+    /*     e.target.innerHTML = "&#11015"; */
+    settings.sortDir = "desc";
   }
-  this.removeEventListener("click", sortDirection);
   registerButtons();
   buildList();
 }
